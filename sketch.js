@@ -138,4 +138,44 @@ function draw() {
       );
     }
   }
+
+
+
+  color = random([
+    // "#ffbe0b",
+    // "#fb5607",
+    "#ff006e",
+    "#8338ec",
+    // "#3a86ff"
+  ]);
+  rows = [-175, -125, -75, -25, 25, 75, 125, 175];
+  cols = [-175, -125, -75, -25, 25, 75, 125, 175];
+  wobble = 10;
+  minLen = 25;
+  maxLen = 40;
+
+  brushes = [
+    "marker",
+    "spray",
+    // "charcoal",
+    // "HB",
+    // "2B",
+    "cpencil",
+    // "2H",
+    "rotring",
+  ];
+
+  // big circles
+  for (let y = 0; y < rows.length; y++) {
+    for (let x = 0; x < cols.length; x++) {
+      brush.set(random(brushes), color, random(0.7, 1.6));
+      brush.flowLine(
+        cols[x] + random(-wobble, wobble),
+        rows[y] + random(-wobble, wobble),
+        random(minLen, maxLen),
+        random(360)
+      );
+    }
+  }
+
 }
