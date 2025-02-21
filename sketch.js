@@ -36,34 +36,84 @@ function windowResized() {
 }
 
 const palettes = [
-  ["#ff9a8b", "#ff6a88", "#ff99ac", "#ffb6c1", "#ffcad4"],  // sunset: 
-  ["#264653", "#2a9d8f", "#e9c46a", "#f4a261", "#e76f51"],  // ocean: 
-  ["#ff00ff", "#ff8800", "#ffcc00", "#00ffcc", "#8800ff"],  // neon: 
-  ["#a8dadc", "#f1faee", "#457b9d", "#1d3557", "#e63946"],  // pastel: 
-  ["#2b2d42", "#8d99ae", "#edf2f4", "#ef233c", "#d90429"],  // forest: 
-  ["#ffbe0b", "#fb5607", "#ff006e", "#8338ec", "#3a86ff"],  // retro: 
-  ["#F8FAFC", "#D9EAFD", "#BCCCDC", "#9AA6B2", "#F14A00"],  // chris: 
-  ["#9CFA08", "#9CFA08", "#9CFA08", "#9CFA08", "#9CFA08"],  // greens: 
+  ["#ff9a8b", "#ff6a88", "#ff99ac", "#ffb6c1", "#ffcad4"], // sunset: 0
+  ["#264653", "#2a9d8f", "#e9c46a", "#f4a261", "#e76f51"], // ocean: 1
+  ["#ff00ff", "#ff8800", "#ffcc00", "#00ffcc", "#8800ff"], // neon: 2
+  ["#a8dadc", "#f1faee", "#457b9d", "#1d3557", "#e63946"], // pastel: 3
+  ["#2b2d42", "#8d99ae", "#edf2f4", "#ef233c", "#d90429"], // forest: 4
+  ["#ffbe0b", "#fb5607", "#ff006e", "#8338ec", "#3a86ff"], // retro: 5
+  ["#F8FAFC", "#D9EAFD", "#BCCCDC", "#9AA6B2", "#F14A00"], // chris: 6
+  ["#9CFA08", "#9CFA08", "#9CFA08", "#9CFA08", "#9CFA08"], // greens: 7
 ];
 
-
 let colors = [];
-let seeds = [];
 
 function setup() {
   C.createCanvas();
   angleMode(DEGREES);
   brush.scale(1.3);
-  for (let i = 0; i < 150; i++) seeds.push(random());
+  // for (let i = 0; i < 150; i++) seeds.push(random());
   // background("#fffceb");
-  background("#F78A11");
-  frameRate(10)
+  // background("#F78A11");
+  // background("#ff006e");
+  frameRate(10);
 }
 
 function draw() {
-
-  let colors = palettes[0];
   let brushes = [
+    "marker",
+    // "spray",
+    // "charcoal",
+    // "HB",
+    // "2B",
+    // "cpencil",
+    // "2H",
+    "rotring",
+  ];
+
+  brush.field("seabed");
+
+  let color = random([
+    // "#ffbe0b",
+    // "#fb5607",
+    "#ff006e",
+    "#8338ec",
+    // "#3a86ff"
+  ]);
+
+  let rows = [-100, 0, 100];
+  let cols = [-100, 0, 100];
+  let wobble = 40;
+  let minLen = 120;
+  let maxLen = 140;
+
+  // small circles
+  for (let y = 0; y < rows.length; y++) {
+    for (let x = 0; x < cols.length; x++) {
+      brush.set(random(brushes), color, random(0.7, 1.6));
+      brush.flowLine(
+        cols[x] + random(-wobble, wobble),
+        rows[y] + random(-wobble, wobble),
+        random(minLen, maxLen),
+        random(360)
+      );
+    }
+  }
+
+  color = random([
+    // "#ffbe0b",
+    // "#fb5607",
+    "#ff006e",
+    "#8338ec",
+    // "#3a86ff"
+  ]);
+  rows = [-150, -50, 50, 150];
+  cols = [-150, -50, 50, 150];
+  wobble = 10;
+  minLen = 50;
+  maxLen = 70;
+
+   brushes = [
     "marker",
     "spray",
     // "charcoal",
@@ -71,49 +121,21 @@ function draw() {
     // "2B",
     "cpencil",
     // "2H",
-    // "rotring",
+    "rotring",
   ];
 
-  brush.field("seabed");
 
-  const color = random(colors);
 
-  let rows = [-100, 0, 100];
-  let cols = [-100, 0, 100];
-
-  let minLen = 100;
-  let maxLen = 120;
-
+  // big circles
   for (let y = 0; y < rows.length; y++) {
     for (let x = 0; x < cols.length; x++) {
       brush.set(random(brushes), color, random(0.7, 1.6));
       brush.flowLine(
-        cols[x] + random(-20, 20),
-        rows[y] + random(-20, 20),
+        cols[x] + random(-wobble, wobble),
+        rows[y] + random(-wobble, wobble),
         random(minLen, maxLen),
         random(360)
       );
     }
   }
-
-
-   rows = [-100, 0, 100];
-   cols = [-100, 0, 100];
-
-   minLen = 50;
-   maxLen = 70;
-
-  for (let y = 0; y < rows.length; y++) {
-    for (let x = 0; x < cols.length; x++) {
-      brush.set(random(brushes), color, random(0.7, 1.6));
-      brush.flowLine(
-        cols[x] + random(-10, 10),
-        rows[y] + random(-10, 10),
-        random(minLen, maxLen),
-        random(360)
-      );
-    }
-  }
-
-
 }
