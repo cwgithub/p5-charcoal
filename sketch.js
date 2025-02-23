@@ -46,7 +46,7 @@ const palettes = [
   ["#9CFA08", "#9CFA08", "#9CFA08", "#9CFA08", "#9CFA08"], // greens: 7
 ];
 
-let colors = [];
+let line = 0;
 
 function setup() {
   C.createCanvas();
@@ -54,15 +54,101 @@ function setup() {
   brush.scale(1.3);
   // for (let i = 0; i < 150; i++) seeds.push(random());
   // background("#fffceb");
-  // background("#F78A11");
+  background("#F78A11");
   // background("#ff006e");
   frameRate(10);
 }
 
+function getColour() {
+  // return  random([
+  //   "#ff7b00",
+  //   "#ff8800",
+  //   "#ff9500",
+  //   "#ffa200",
+  //   "#ffaa00",
+  //   "#ffb700",
+  //   "#ffc300",
+  //   "#ffd000",
+  //   "#ffdd00",
+  //   "#ffea00",
+  // ]);
+
+  return random([
+    // "#ff579f", // pink
+    "#007f5f",
+    "#2b9348",
+    "#55a630",
+    "#80b918",
+    "#aacc00",
+    "#bfd200",
+    "#d4d700",
+    "#dddf00",
+    "#eeef20",
+    "#ffff3f",
+  ]);
+}
+
+function flowLine(x, y, len, deg) {
+
+  // if(x<120 && x>-120 && y>-120 && y < 120) {
+  //   return;
+  // }
+
+  brush.flowLine(x, y, len, deg);
+  line++;
+  console.log(line);
+  if (line === 15000) {
+    noLoop();
+  }
+}
+
 function draw() {
-  let brushes = [
+  brush.field("seabed");
+  biggest();
+  medium();
+  smallest();
+}
+
+function biggest() {
+  rows = [-150, -50, 50, 150];
+  cols = [-150, -50, 50, 150];
+  wobble = 10;
+  minLen = 50;
+  maxLen = 70;
+
+  brushes = [
     "marker",
     // "spray",
+    // "charcoal",
+    // "HB",
+    // "2B",
+    "cpencil",
+    // "2H",
+    "rotring",
+  ];
+
+  // big circles
+  for (let y = 0; y < rows.length; y++) {
+    for (let x = 0; x < cols.length; x++) {
+      brush.set(random(brushes), getColour(), random(0.7, 1.6));
+
+
+
+
+      flowLine(
+        cols[x] + random(-wobble, wobble),
+        rows[y] + random(-wobble, wobble),
+        random(minLen, maxLen),
+        random(360)
+      );
+    }
+  }
+}
+
+function medium() {
+  let brushes = [
+    "marker",
+    "spray",
     // "charcoal",
     // "HB",
     // "2B",
@@ -71,27 +157,17 @@ function draw() {
     "rotring",
   ];
 
-  brush.field("seabed");
-
-  let color = random([
-    // "#ffbe0b",
-    // "#fb5607",
-    "#ff006e",
-    "#8338ec",
-    // "#3a86ff"
-  ]);
-
   let rows = [-100, 0, 100];
   let cols = [-100, 0, 100];
   let wobble = 40;
-  let minLen = 120;
-  let maxLen = 140;
+  let minLen = 90;
+  let maxLen = 110;
 
   // small circles
   for (let y = 0; y < rows.length; y++) {
     for (let x = 0; x < cols.length; x++) {
-      brush.set(random(brushes), color, random(0.7, 1.6));
-      brush.flowLine(
+      brush.set(random(brushes), getColour(), random(0.7, 1.6));
+      flowLine(
         cols[x] + random(-wobble, wobble),
         rows[y] + random(-wobble, wobble),
         random(minLen, maxLen),
@@ -99,64 +175,19 @@ function draw() {
       );
     }
   }
-
-  color = random([
-    // "#ffbe0b",
-    // "#fb5607",
-    "#ff006e",
-    "#8338ec",
-    // "#3a86ff"
-  ]);
-  rows = [-150, -50, 50, 150];
-  cols = [-150, -50, 50, 150];
-  wobble = 10;
-  minLen = 50;
-  maxLen = 70;
-
-   brushes = [
-    "marker",
-    "spray",
-    // "charcoal",
-    // "HB",
-    // "2B",
-    "cpencil",
-    // "2H",
-    "rotring",
-  ];
+}
 
 
-
-  // big circles
-  for (let y = 0; y < rows.length; y++) {
-    for (let x = 0; x < cols.length; x++) {
-      brush.set(random(brushes), color, random(0.7, 1.6));
-      brush.flowLine(
-        cols[x] + random(-wobble, wobble),
-        rows[y] + random(-wobble, wobble),
-        random(minLen, maxLen),
-        random(360)
-      );
-    }
-  }
-
-
-
-  color = random([
-    // "#ffbe0b",
-    // "#fb5607",
-    "#ff006e",
-    "#8338ec",
-    // "#3a86ff"
-  ]);
+function smallest() {
   rows = [-175, -125, -75, -25, 25, 75, 125, 175];
   cols = [-175, -125, -75, -25, 25, 75, 125, 175];
   wobble = 10;
-  minLen = 25;
-  maxLen = 40;
+  minLen = 15;
+  maxLen = 45;
 
   brushes = [
     "marker",
-    "spray",
+    // "spray",
     // "charcoal",
     // "HB",
     // "2B",
@@ -168,8 +199,8 @@ function draw() {
   // big circles
   for (let y = 0; y < rows.length; y++) {
     for (let x = 0; x < cols.length; x++) {
-      brush.set(random(brushes), color, random(0.7, 1.6));
-      brush.flowLine(
+      brush.set(random(brushes), getColour(), random(0.7, 1.6));
+      flowLine(
         cols[x] + random(-wobble, wobble),
         rows[y] + random(-wobble, wobble),
         random(minLen, maxLen),
@@ -177,5 +208,4 @@ function draw() {
       );
     }
   }
-
 }
