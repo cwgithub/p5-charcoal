@@ -74,22 +74,25 @@ const greens = [
 
 let line = 0;
 
+let img;
+
+function preload() {
+  img = loadImage("assets/figure.png"); // Load the image
+}
+
 function setup() {
   C.createCanvas();
   angleMode(DEGREES);
   brush.scale(1.3);
-  // for (let i = 0; i < 150; i++) seeds.push(random());
-  // background("#fffceb");
   background("#dad7cd");
-  // background("#ff006e");
+  image(img, -1000, -1000, 2000, 2000);
   frameRate(50);
 }
 
 function getColour(colours) {
   let c = random(colours);
-  console.log('Color: ', c);
+  console.log("Color: ", c);
   return c;
-
 }
 
 function flowLine(x, y, len, deg) {
@@ -108,9 +111,9 @@ function flowLine(x, y, len, deg) {
 function draw() {
   brush.field("seabed");
 
-  let colours = greens
+  let colours = greens;
 
-  let offset = 300
+  let offset = 300;
 
   this.area(-offset, -offset, colours);
   this.area(-offset, -0, colours);
